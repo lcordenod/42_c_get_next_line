@@ -6,14 +6,14 @@
 /*   By: lcordeno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 13:53:20 by lcordeno          #+#    #+#             */
-/*   Updated: 2018/11/23 17:59:59 by lcordeno         ###   ########.fr       */
+/*   Updated: 2018/11/26 15:32:03 by lcordeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#define BUFF_SIZE 100000
+#define BUFF_SIZE 10
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
