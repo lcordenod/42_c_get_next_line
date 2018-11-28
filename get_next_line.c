@@ -6,25 +6,29 @@
 /*   By: lcordeno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 17:27:55 by lcordeno          #+#    #+#             */
-/*   Updated: 2018/11/26 18:32:56 by lcordeno         ###   ########.fr       */
+/*   Updated: 2018/11/28 18:53:34 by lcordeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "libft/libft.h"
 
-void	ft_buff_cat(char *buff, char **tmp, int ret)
+void	ft_buff_cat(char *buff, char **dst, int ret)
 {
-	*tmp = ft_strjoin(*tmp, buff);
+	char *temp;
+
+	temp = *dst;
 	buff[ret] = '\0';
+	*dst = ft_strjoin(*dst, buff);
+	free(temp);
 }
 
-void	*ft_move_tmp(char *tmp)
+void	*ft_move_cpy(char *cpy)
 {
-	while (*tmp != '\n')
-		tmp++;
-	tmp++;
-	return (tmp);
+	while (*cpy != '\n')
+		cpy++;
+	cpy++;
+	return (cpy);
 }
 
 char	*ft_chrncpy(char *s, char *line, char c)
@@ -37,30 +41,41 @@ char	*ft_chrncpy(char *s, char *line, char c)
 	if (!(line = (char*)malloc(sizeof(char) * i + 1)))
 		return (0);
 	line = ft_strncpy(line, s, i);
+	line[i] = '\0';
 	return (line);
 }
 
 int		get_next_line(const int fd, char **line)
 {
-	int ret;
-	char buff[BUFF_SIZE + 1];
-	static char *tmp;
+	int			ret;
+	char		buff[BUFF_SIZE + 1];
+	static char	*cpy;
+	char		*tempo;
 
 	ret = 0;
-	if (fd < 0 || !line || !BUFF_SIZE)
+	if (fd < 0 || read(fd, 0, 0) == -1 || !line)
 		return (-1);
-	if (!tmp)
-		tmp = ft_strnew(0);
-	while ((ft_strchr(tmp, '\n') == 0 && (ret = read(fd, buff, BUFF_SIZE)) > 0))
-		ft_buff_cat(buff, &tmp, ret);
-	if ((ft_strchr(tmp, '\n') == 0 && !(ret)))
-	{
-		*line = tmp;
-		return (0);
-	}
+	if (!cpy)
+		cpy = ft_strnew(0);
+	while ((ft_strchr(cpy, '\n') == 0 && (ret = read(fd, buff, BUFF_SIZE)) > 0))
+		ft_buff_cat(buff, &cpy, ret);
 	if (ret < 0)
 		return (-1);
-	*line = ft_chrncpy(tmp, *line, '\n');
-	tmp = ft_move_tmp(tmp);
+	if (ft_strchr(cpy, '\n') == 0 && ret == 0)
+	{
+		printf("test\n");
+		if (ft_strlen(cpy))
+		{
+			printf("line: %s\n", *line);
+			ft_strclr(cpy);
+			return (1);
+		}
+		return (0);
+	}
+	printf("line: %s\n", *line);
+	*line = ft_chrncpy(cpy, *line, '\n');
+	tempo = cpy;
+	cpy = ft_strdup(ft_move_cpy(cpy));
+	free(tempo);
 	return (1);
 }
