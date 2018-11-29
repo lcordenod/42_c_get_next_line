@@ -63,16 +63,14 @@ int		get_next_line(const int fd, char **line)
 		return (-1);
 	if (ft_strchr(cpy, '\n') == 0 && ret == 0)
 	{
-		printf("test\n");
 		if (ft_strlen(cpy))
 		{
-			printf("line: %s\n", *line);
+			*line = ft_chrncpy(cpy, *line, '\0');
 			ft_strclr(cpy);
 			return (1);
 		}
 		return (0);
 	}
-	printf("line: %s\n", *line);
 	*line = ft_chrncpy(cpy, *line, '\n');
 	tempo = cpy;
 	cpy = ft_strdup(ft_move_cpy(cpy));
