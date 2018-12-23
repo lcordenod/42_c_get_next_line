@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_count_if.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcordeno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/21 13:53:20 by lcordeno          #+#    #+#             */
-/*   Updated: 2018/11/30 10:11:08 by lcordeno         ###   ########.fr       */
+/*   Created: 2018/09/17 18:44:48 by lcordeno          #+#    #+#             */
+/*   Updated: 2018/09/19 19:12:10 by lcordeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+int		ft_count_if(char **tab, int (*f)(char*))
+{
+	int i;
+	int count;
 
-# define BUFF_SIZE 32
-# include "libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-
-int		get_next_line(const int fd, char **line);
-
-#endif
+	i = 0;
+	count = 0;
+	while (tab[i] != 0)
+	{
+		if (f(tab[i]) == 1)
+			count++;
+		i++;
+	}
+	return (count);
+}

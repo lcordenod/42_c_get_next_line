@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_sort_integer_table.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcordeno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/21 13:53:20 by lcordeno          #+#    #+#             */
-/*   Updated: 2018/11/30 10:11:08 by lcordeno         ###   ########.fr       */
+/*   Created: 2018/08/31 15:58:36 by lcordeno          #+#    #+#             */
+/*   Updated: 2018/09/01 14:51:15 by lcordeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+void	ft_sort_integer_table(int *tab, int size)
+{
+	int a;
+	int b;
+	int temp;
 
-# define BUFF_SIZE 32
-# include "libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-
-int		get_next_line(const int fd, char **line);
-
-#endif
+	a = 0;
+	while (a < size)
+	{
+		b = a + 1;
+		while (b < size)
+		{
+			if (tab[a] > tab[b])
+			{
+				temp = tab[a];
+				tab[a] = tab[b];
+				tab[b] = temp;
+			}
+			b++;
+		}
+		a++;
+	}
+}

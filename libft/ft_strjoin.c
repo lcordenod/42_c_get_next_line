@@ -1,39 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcordeno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/27 09:23:55 by lcordeno          #+#    #+#             */
-/*   Updated: 2018/11/28 17:56:18 by lcordeno         ###   ########.fr       */
+/*   Created: 2018/11/11 15:25:59 by lcordeno          #+#    #+#             */
+/*   Updated: 2018/11/16 12:34:14 by lcordeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
-#include <stdio.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include "get_next_line.h"
 #include <stdlib.h>
+#include "libft.h"
 
-int	ret;
-
-int		main(int ac, char **av)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		fd;
-	char	*test;
+	char	*str;
+	size_t	i;
+	size_t	j;
 
-	if (ac < 2)
-		return (0);
-	fd = open(av[1], O_RDONLY);
-	while ((ret = get_next_line(fd, &test)))
+	if (s1 && s2)
 	{
-		printf("line = %s \n ret = %d\n", test, ret);
-		free(test);
+		i = 0;
+		j = 0;
+		if (!s1 || !(str = (char*)malloc(sizeof(char) *
+		(ft_strlen(s1) + ft_strlen(s2) + 1))))
+			return (NULL);
+		while (s1[i])
+		{
+			str[i] = s1[i];
+			i++;
+		}
+		while (s2[j])
+		{
+			str[i + j] = s2[j];
+			j++;
+		}
+		str[i + j] = '\0';
+		return (str);
 	}
-	ret = get_next_line(fd, &test);
-	printf("line = %s \n ret = %d\n", test, ret);
-	close(fd);
 	return (0);
 }
